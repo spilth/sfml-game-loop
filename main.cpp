@@ -1,8 +1,8 @@
-#include <sstream>
 #include <SFML/Graphics.hpp>
+#include "DebugPanel.h"
 
 int main() {
-    std::stringstream debugStringStream;
+    DebugPanel debugInfo;
 
     sf::Font debugFont;
     debugFont.loadFromFile("fonts/JetBrainsMono-Regular.ttf");
@@ -15,28 +15,6 @@ int main() {
     sf::RenderWindow window(vm, "SFML Game Loop");
 //    window.setFramerateLimit(0);
 //    window.setVerticalSyncEnabled(true);
-
-    sf::Text debugText;
-    debugText.setFont(debugFont);
-    debugText.setPosition(16, 16);
-    debugText.setCharacterSize(36);
-    debugText.setFillColor(sf::Color::White);
-
-    sf::CircleShape currentFpsCircle(8);
-    currentFpsCircle.setFillColor(sf::Color::Yellow);
-    currentFpsCircle.setPosition(0, 4);
-
-    sf::CircleShape lowestFpsCircle(8);
-    lowestFpsCircle.setFillColor(sf::Color::Red);
-    lowestFpsCircle.setPosition(0, 4);
-
-    sf::CircleShape highestFpsCircle(8);
-    highestFpsCircle.setFillColor(sf::Color::Green);
-    highestFpsCircle.setPosition(0, 4);
-
-    int currentFps;
-    int lowestFps = 1000;
-    int highestFps = 0;
 
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
@@ -55,32 +33,15 @@ int main() {
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
-            lowestFps = 1000;
-            highestFps = 0;
+            debugInfo.resetFps();
         }
 
         sf::Time deltaTime = clock.restart();
 
-        currentFps = floor(1 / deltaTime.asSeconds());
-        if (currentFps > highestFps) highestFps = currentFps;
-        if (currentFps < lowestFps) lowestFps = currentFps;
-
-        currentFpsCircle.setPosition((float)currentFps, 4);
-        lowestFpsCircle.setPosition((float)lowestFps, 4);
-        highestFpsCircle.setPosition((float)highestFps, 4);
-
-        debugStringStream.str("");
-        debugStringStream << "FPS: " << currentFps << "\n";
-        debugStringStream << "Low/High FPS: " << lowestFps << "/" << highestFps << "\n";
-        debugStringStream << "Delta Time: " << deltaTime.asSeconds() << "s\n";
-        debugStringStream << "Delete = Reset FPS, ESC = Quit";
-        debugText.setString(debugStringStream.str());
+        debugInfo.update(deltaTime);
 
         window.clear();
-        window.draw(debugText);
-        window.draw(lowestFpsCircle);
-        window.draw(highestFpsCircle);
-        window.draw(currentFpsCircle);
+        debugInfo.draw(window);
         window.display();
     }
 

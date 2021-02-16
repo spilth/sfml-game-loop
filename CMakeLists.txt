@@ -3,7 +3,7 @@ project(gameloop)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(gameloop main.cpp)
+add_executable(gameloop main.cpp DebugPanel.cpp)
 
 set(SFML_INCLUDE_DIR "/usr/local/Cellar/sfml/2.5.1/include")
 set(SFML_LIBRARY_DIR "/usr/local/Cellar/sfml/2.5.1/lib")
