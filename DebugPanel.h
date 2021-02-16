@@ -1,14 +1,13 @@
 #ifndef GAMELOOP_DEBUGPANEL_H
 #define GAMELOOP_DEBUGPANEL_H
 
-#include "DebugPanel.h"
 #include <sstream>
 #include <SFML/Graphics.hpp>
 
 class DebugPanel {
     std::stringstream debugStringStream;
 
-    int currentFps;
+    int currentFps = 0;
     int lowestFps = 1000;
     int highestFps = 0;
 
