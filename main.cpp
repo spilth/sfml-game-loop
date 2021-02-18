@@ -7,16 +7,14 @@ int main() {
     sf::Font debugFont;
     debugFont.loadFromFile("fonts/JetBrainsMono-Regular.ttf");
 
-    sf::Event event;
     sf::Clock clock;
 
-    sf::VideoMode vm(1920, 1080);
-
-    sf::RenderWindow window(vm, "SFML Game Loop");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Game Loop");
 //    window.setFramerateLimit(0);
 //    window.setVerticalSyncEnabled(true);
 
     while (window.isOpen()) {
+        sf::Event event;
         while (window.pollEvent(event)) {
             switch (event.type) {
                 case sf::Event::Closed:
@@ -45,5 +43,5 @@ int main() {
         window.display();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
